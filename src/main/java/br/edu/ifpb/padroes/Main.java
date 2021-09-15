@@ -12,7 +12,6 @@ import br.edu.ifpb.padroes.payment.PaymentService;
 public class Main {
 	public static void main(String[] args) {
 
-		CompoundProperty cp = new CompoundProperty();
 		PaymentService paymentService = new PaymentService();
 		paymentService.loadProperty(
 
@@ -21,12 +20,8 @@ public class Main {
 				new Tenement(new Float(100000), "Corti�o construtura", "Rua y")
 
 		);
-
-		// TODO - reduzir chamadas múltiplas para uma única chamada para o método
-		// pay() utilizando o padrão composite
-
-		List<Property> p = cp.getChildren();
+		List<Property> p = (List<Property>) paymentService.getAllProperty();
 		paymentService.pay(p);
-		
+
 	}
 }

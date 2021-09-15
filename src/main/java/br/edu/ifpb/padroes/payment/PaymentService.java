@@ -12,6 +12,10 @@ public class PaymentService {
 
 	private CompoundProperty allProperty = new CompoundProperty();
 
+	public CompoundProperty getAllProperty() {
+		return allProperty;
+	}
+
 	public void loadProperty(Property... propertys) {
 		allProperty.clear();
 		allProperty.add(propertys);
@@ -21,15 +25,9 @@ public class PaymentService {
 
 		for (Property sale : properties) {
 
-			GovernmentTaxesPayment governmentTaxesPayment = new GovernmentTaxesPayment();
-			RealEstatePayment realEstatePayment = new RealEstatePayment();
-			PropertyPayment propertyPayment = new PropertyPayment();
-
-			// TODO - implementar Chain of Responsibility para que ordem dos métodos de
-			// pagamento seja dinâmica (definida em tempo de execução)
-			governmentTaxesPayment.process(sale);
-			realEstatePayment.process(sale);
-			propertyPayment.process(sale);
+			PaymentProcessor p = new GovernmentTaxesPayment();
+			p.linkWith(new RealEstatePayment()).linkWith(new PropertyPayment());
+			p.process(sale);
 		}
 	}
 
