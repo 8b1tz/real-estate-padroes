@@ -10,7 +10,14 @@ public class Apartment implements Property {
     public float getPrice() {
         return price;
     }
-    public void setPrice(float price) {
+    public Apartment(float price, String address, String builder) {
+	
+		this.price = price;
+		this.address = address;
+		this.builder = builder;
+	}
+
+	public void setPrice(float price) {
         this.price = price;
     }
     public String getAddress() {

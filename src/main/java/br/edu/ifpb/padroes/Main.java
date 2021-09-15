@@ -1,35 +1,32 @@
 package br.edu.ifpb.padroes;
 
+import java.util.List;
+
 import br.edu.ifpb.padroes.domain.Apartment;
 import br.edu.ifpb.padroes.domain.Bungalow;
+import br.edu.ifpb.padroes.domain.CompoundProperty;
+import br.edu.ifpb.padroes.domain.Property;
 import br.edu.ifpb.padroes.domain.Tenement;
 import br.edu.ifpb.padroes.payment.PaymentService;
 
 public class Main {
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        Apartment apartment = new Apartment();
-        apartment.setAddress("Rua x");
-        apartment.setBuilder("Apartamento construtura");
-        apartment.setPrice(200000);
+		CompoundProperty cp = new CompoundProperty();
+		PaymentService paymentService = new PaymentService();
+		paymentService.loadProperty(
 
-        Bungalow bungalow = new Bungalow();
-        bungalow.setAddress("Rua y");
-        bungalow.setBuilder("Bangalô construtura");
-        bungalow.setPrice(150000);
+				new Apartment(new Float(100000), "Apartamento construtura", "Rua x"),
+				new Bungalow(new Float(100000), "Bangal� construtura", "Rua y"),
+				new Tenement(new Float(100000), "Corti�o construtura", "Rua y")
 
-        Tenement tenament = new Tenement();
-        bungalow.setAddress("Rua y");
-        bungalow.setBuilder("Cortiço construtura");
-        bungalow.setPrice(100000);
+		);
 
-        PaymentService paymentService = new PaymentService();
+		// TODO - reduzir chamadas múltiplas para uma única chamada para o método
+		// pay() utilizando o padrão composite
 
-        // TODO - reduzir chamadas múltiplas para uma única chamada para o método pay() utilizando o padrão composite
-        paymentService.pay(apartment);
-        paymentService.pay(bungalow);
-        paymentService.pay(tenament);
-
-
-    }
+		List<Property> p = cp.getChildren();
+		paymentService.pay(p);
+		
+	}
 }
